@@ -228,6 +228,7 @@ main{max-width:1100px;margin:0 auto;padding:0 20px 48px;}
 </div></div></div></div>
 <div class="toast" id="tst"></div>
 <script>
+
 document.getElementById("dtxt").textContent = new Date().toLocaleDateString("pt-BR",{day:"2-digit",month:"long",year:"numeric"});
 var SURL = "https://loehgloomiimnwwtlrmk.supabase.co";
 var SKEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxvZWhnbG9vbWlpbW53d3Rscm1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcyMTYxMjgsImV4cCI6MjA5Mjc5MjEyOH0.mQnRUJKTfWdU-R1y0hISGLljEW8O6wMrPe0ldXI6ct8";
@@ -236,7 +237,6 @@ var admOk = false;
 var admTab = "ag";
 var fAg = "Todos";
 var fNC = "Todos";
-
 
 function api(method, table, body, filter) {
   var url = SURL + "/rest/v1/" + table;
@@ -265,25 +265,18 @@ function tst(msg, cor, bg) {
 function abrirOv(id) { document.getElementById(id).classList.add("on"); }
 function fecharOv(id) { document.getElementById(id).classList.remove("on"); }
 
-// Fechar ao clicar fora
 ["mov","mnc","mlnc","madm-login","madm","medit"].forEach(function(id) {
   document.getElementById(id).addEventListener("click", function(e) {
     if (e.target === this) fecharOv(id);
   });
 });
 
-// Botoes fechar
-var fechares = {
-  "fMov": "mov", "fMnc": "mnc", "fMlnc": "mlnc",
-  "fMadmLogin": "madm-login", "fMadm": "madm",
-  "fMedit": "medit", "fMedit2": "medit"
-};
+var fechares = {"fMov":"mov","fMnc":"mnc","fMlnc":"mlnc","fMadmLogin":"madm-login","fMadm":"madm","fMedit":"medit","fMedit2":"medit"};
 Object.keys(fechares).forEach(function(btnId) {
   var el = document.getElementById(btnId);
   if (el) el.addEventListener("click", function() { fecharOv(fechares[btnId]); });
 });
 
-// TABS
 ["cem","cemma","coplasa"].forEach(function(u) {
   document.getElementById("tab-" + u).addEventListener("click", function() {
     ["cem","cemma","coplasa"].forEach(function(x) {
@@ -295,7 +288,6 @@ Object.keys(fechares).forEach(function(btnId) {
   });
 });
 
-// LIMPAR
 ["cem","cemma","coplasa"].forEach(function(u) {
   document.getElementById("lp-" + u).addEventListener("click", function() {
     ["dt","hr","ca","re","de","mo","nm","ct"].forEach(function(f) {
@@ -305,7 +297,6 @@ Object.keys(fechares).forEach(function(btnId) {
   });
 });
 
-// AGENDAR
 ["cem","cemma","coplasa"].forEach(function(u) {
   document.getElementById("ag-" + u).addEventListener("click", function() {
     var dt = document.getElementById(u+"-dt").value;
@@ -349,40 +340,92 @@ function cntUp() {
   }).catch(function(){});
 }
 
-// RENDER AGENDAMENTOS (cliente - so visualiza, sem finalizar)
+function mkCard(x, i, btns) {
+  var cs = {
+    CEM: "background:#e0f2fe;color:#0369a1;border:1px solid #7dd3fc",
+    CEMMA: "background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd",
+    COPLASA: "background:#dcfce7;color:#15803d;border:1px solid #86efac"
+  };
+  var d = document.createElement("div");
+  d.className = "it";
+  var top = '<div class="it0"><div class="it0l">';
+  top += '<span style="' + cs[x.unidade] + ';padding:2px 9px;border-radius:12px;font-size:11px;font-weight:800;letter-spacing:1px;">' + x.unidade + '</span>';
+  top += '<span style="font-size:10px;color:#94a3b8;">#' + String(i+1).padStart(4,"0") + '</span>';
+  top += '</div><span style="font-size:10px;color:#94a3b8;">' + (x.registro||"") + '</span></div>';
+  var body = '<div class="ib">';
+  body += '<div class="if">Data<strong>' + fmt(x.data) + '</strong></div>';
+  body += '<div class="if">Horario<strong>' + (x.horario||"-") + '</strong></div>';
+  body += '<div class="if">Caminhao<strong>' + x.caminhao + '</strong></div>';
+  body += '<div class="if">Reboque<strong>' + (x.reboque||"-") + '</strong></div>';
+  body += '<div class="if" style="grid-column:1/-1">Destino<strong>' + x.destino + '</strong></div>';
+  body += '<div class="if">Agendado por<strong>' + (x.nome_agendou||"-") + '</strong></div>';
+  body += '<div class="if">Contato<strong>' + (x.contato||"-") + '</strong></div>';
+  body += '</div>';
+  var foot = '<div class="if0"><div class="im">Motivo: <strong>' + (x.motivo||"Nao informado") + '</strong></div>';
+  if (btns) foot += '<div style="display:flex;gap:5px;">' + btns + '</div>';
+  foot += '</div>';
+  d.innerHTML = top + body + foot;
+  return d;
+}
+
+function mkFin(x) {
+  var cs = {
+    CEM: "background:#e0f2fe;color:#0369a1;border:1px solid #7dd3fc",
+    CEMMA: "background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd",
+    COPLASA: "background:#dcfce7;color:#15803d;border:1px solid #86efac"
+  };
+  var d = document.createElement("div");
+  d.className = "fn";
+  d.innerHTML = '<div class="fn0"><div class="it0l"><span style="' + cs[x.unidade] + ';padding:2px 9px;border-radius:12px;font-size:11px;font-weight:800;letter-spacing:1px;">' + x.unidade + '</span><span style="background:#d1fae5;color:#065f46;border:1px solid #6ee7b7;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;">FINALIZADO</span></div><span style="font-size:10px;color:#94a3b8;">' + (x.finalizado_em||"") + '</span></div><div class="fb2"><div class="if">Data<strong>' + fmt(x.data) + '</strong></div><div class="if">Horario<strong>' + (x.horario||"-") + '</strong></div><div class="if">Caminhao<strong>' + x.caminhao + '</strong></div><div class="if">Reboque<strong>' + (x.reboque||"-") + '</strong></div><div class="if" style="grid-column:1/-1">Destino<strong>' + x.destino + '</strong></div><div class="if">Agendado por<strong>' + (x.nome_agendou||"-") + '</strong></div><div class="if">Contato<strong>' + (x.contato||"-") + '</strong></div></div><div class="fn1"><div class="im">Motivo: <strong>' + (x.motivo||"-") + '</strong></div><button class="bdel" data-id="' + x.id + '">Excluir</button></div>';
+  d.querySelector(".bdel").addEventListener("click", function() {
+    if (!confirm("Excluir do historico?")) return;
+    api("DELETE", "finalizados", null, "id=eq." + x.id).then(function() { rAdm(); });
+  });
+  return d;
+}
+
+function mkNC(x) {
+  var d = document.createElement("div");
+  d.className = "ni";
+  d.innerHTML = '<div class="ni0"><div class="it0l"><span style="background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;padding:2px 9px;border-radius:12px;font-size:11px;font-weight:800;letter-spacing:1px;">' + x.unidade + '</span><span style="font-size:11px;color:#ef4444;font-weight:600;">' + (x.tipo||"") + '</span></div><span style="font-size:10px;color:#94a3b8;">' + (x.registro||"") + '</span></div><div class="nb2"><div class="if">Data<strong>' + fmt(x.data) + '</strong></div><div class="if">Responsavel<strong>' + (x.responsavel||"-") + '</strong></div><div class="if" style="grid-column:1/-1">Descricao<strong>' + (x.descricao||"") + '</strong></div>' + (x.acao ? '<div class="if" style="grid-column:1/-1">Acao<strong>' + x.acao + '</strong></div>' : '') + '</div><div class="ni1"><span></span><button class="bdel" data-id="' + x.id + '">Excluir</button></div>';
+  d.querySelector(".bdel").addEventListener("click", function() {
+    if (!confirm("Excluir?")) return;
+    api("DELETE", "nao_conformidades", null, "id=eq." + x.id).then(function() { rAdm(); });
+  });
+  return d;
+}
+
+function setLoading(elId) {
+  var el = document.getElementById(elId);
+  el.innerHTML = "";
+  var d = document.createElement("div");
+  d.className = "ld";
+  d.innerHTML = '<div class="sp"></div><br>Carregando...';
+  el.appendChild(d);
+  return el;
+}
+
+function setEmpty(elId, msg) {
+  var el = document.getElementById(elId);
+  el.innerHTML = "";
+  var d = document.createElement("div");
+  d.className = "emp";
+  d.textContent = msg;
+  el.appendChild(d);
+}
+
 function rAg() {
-  var el = document.getElementById("ls");
-  el.innerHTML = '<div class="ld"><div class="sp"></div><br>Carregando...</div>';
+  var el = setLoading("ls");
   api("GET", "agendamentos", null, "status=eq.pendente&order=created_at.desc").then(function(r) {
     return r.json();
   }).then(function(d) {
     var f = fAg === "Todos" ? d : d.filter(function(x) { return x.unidade === fAg; });
-    if (!f.length) { el.innerHTML = '<div class="emp">Nenhum agendamento pendente.</div>'; return; }
-    var cs = {
-      CEM: "background:#e0f2fe;color:#0369a1;border:1px solid #7dd3fc",
-      CEMMA: "background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd",
-      COPLASA: "background:#dcfce7;color:#15803d;border:1px solid #86efac"
-    };
-    el.innerHTML = f.map(function(x, i) {
-      return "<div class="it"><div class="it0"><div class="it0l">" +
-        "<span style="" + cs[x.unidade] + ";padding:2px 9px;border-radius:12px;font-size:11px;font-weight:800;letter-spacing:1px;">" + x.unidade + "</span>" +
-        "<span style="font-size:10px;color:#94a3b8;">#" + String(i+1).padStart(4,"0") + "</span></div>" +
-        "<span style="font-size:10px;color:#94a3b8;">" + (x.registro||"") + "</span></div>" +
-        "<div class="ib">" +
-        "<div class="if">Data<strong>" + fmt(x.data) + "</strong></div>" +
-        "<div class="if">Horario<strong>" + (x.horario||"-") + "</strong></div>" +
-        "<div class="if">Caminhao<strong>" + x.caminhao + "</strong></div>" +
-        "<div class="if">Reboque<strong>" + (x.reboque||"-") + "</strong></div>" +
-        "<div class="if" style="grid-column:1/-1">Destino<strong>" + x.destino + "</strong></div>" +
-        "<div class="if">Agendado por<strong>" + (x.nome_agendou||"-") + "</strong></div>" +
-        "<div class="if">Contato<strong>" + (x.contato||"-") + "</strong></div>" +
-        "</div>" +
-        "<div class="if0"><div class="im">Motivo: <strong>" + (x.motivo||"Nao informado") + "</strong></div></div></div>";
-    }).join("");
-  }).catch(function() { el.innerHTML = '<div class="emp">Erro ao carregar.</div>'; });
+    el.innerHTML = "";
+    if (!f.length) { setEmpty("ls", "Nenhum agendamento pendente."); return; }
+    f.forEach(function(x, i) { el.appendChild(mkCard(x, i, null)); });
+  }).catch(function() { setEmpty("ls", "Erro ao carregar."); });
 }
 
-// FILTROS AGENDAMENTOS
 ["Todos","CEM","CEMMA","COPLASA"].forEach(function(v) {
   document.getElementById("f-" + v).addEventListener("click", function() {
     document.querySelectorAll("#mov .fb").forEach(function(b) { b.classList.remove("on"); });
@@ -390,28 +433,16 @@ function rAg() {
   });
 });
 
-// RENDER NC
 function rNC() {
-  var el = document.getElementById("lnc");
-  el.innerHTML = '<div class="ld"><div class="sp"></div><br>Carregando...</div>';
+  var el = setLoading("lnc");
   api("GET", "nao_conformidades", null, "order=created_at.desc").then(function(r) {
     return r.json();
   }).then(function(d) {
     var f = fNC === "Todos" ? d : d.filter(function(x) { return x.unidade === fNC; });
-    if (!f.length) { el.innerHTML = '<div class="emp">Nenhuma nao conformidade.</div>'; return; }
-    el.innerHTML = f.map(function(x) {
-      return "<div class="ni"><div class="ni0"><div class="it0l">" +
-        "<span style="background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;padding:2px 9px;border-radius:12px;font-size:11px;font-weight:800;letter-spacing:1px;">" + x.unidade + "</span>" +
-        "<span style="font-size:11px;color:#ef4444;font-weight:600;">" + (x.tipo||"") + "</span>" +
-        "</div><span style="font-size:10px;color:#94a3b8;">" + (x.registro||"") + "</span></div>" +
-        "<div class="nb2">" +
-        "<div class="if">Data<strong>" + fmt(x.data) + "</strong></div>" +
-        "<div class="if">Responsavel<strong>" + (x.responsavel||"-") + "</strong></div>" +
-        "<div class="if" style="grid-column:1/-1">Descricao<strong>" + (x.descricao||"") + "</strong></div>" +
-        (x.acao ? "<div class="if" style="grid-column:1/-1">Acao<strong>" + x.acao + "</strong></div>" : "") +
-        "</div></div>";
-    }).join("");
-  }).catch(function() { el.innerHTML = '<div class="emp">Erro ao carregar.</div>'; });
+    el.innerHTML = "";
+    if (!f.length) { setEmpty("lnc", "Nenhuma nao conformidade."); return; }
+    f.forEach(function(x) { el.appendChild(mkNC(x)); });
+  }).catch(function() { setEmpty("lnc", "Erro ao carregar."); });
 }
 
 ["Todos","CEM","CEMMA","COPLASA"].forEach(function(v) {
@@ -421,7 +452,6 @@ function rNC() {
   });
 });
 
-// NC SALVAR
 document.getElementById("sNC").addEventListener("click", function() {
   var dt = document.getElementById("nc-dt").value;
   var un = document.getElementById("nc-un").value;
@@ -448,7 +478,6 @@ document.getElementById("lNC").addEventListener("click", function() {
   ["nc-dt","nc-hr","nc-un","nc-tp","nc-rs","nc-ds","nc-ac"].forEach(function(id) { document.getElementById(id).value = ""; });
 });
 
-// ADM LOGIN
 document.getElementById("btnAdm").addEventListener("click", function() {
   if (admOk) { rAdm(); abrirOv("madm"); } else { abrirOv("madm-login"); }
 });
@@ -469,7 +498,6 @@ document.getElementById("adm-pw").addEventListener("keydown", function(e) {
   if (e.key === "Enter") document.getElementById("btnEntrar").click();
 });
 
-// ADM TABS
 document.getElementById("adm-ag").addEventListener("click", function() {
   admTab = "ag";
   ["adm-ag","adm-fin","adm-nc"].forEach(function(id) { document.getElementById(id).className = "fb"; });
@@ -487,135 +515,61 @@ document.getElementById("adm-nc").addEventListener("click", function() {
 });
 
 function rAdm() {
-  var el = document.getElementById("adm-ls");
-  el.innerHTML = '<div class="ld"><div class="sp"></div><br>Carregando...</div>';
-  var cs = {
-    CEM: "background:#e0f2fe;color:#0369a1;border:1px solid #7dd3fc",
-    CEMMA: "background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd",
-    COPLASA: "background:#dcfce7;color:#15803d;border:1px solid #86efac"
-  };
-
+  var el = setLoading("adm-ls");
   if (admTab === "ag") {
     api("GET", "agendamentos", null, "status=eq.pendente&order=created_at.desc").then(function(r) { return r.json(); }).then(function(d) {
-      if (!d.length) { el.innerHTML = '<div class="emp">Nenhum agendamento pendente.</div>'; return; }
-      el.innerHTML = d.map(function(x, i) {
-        var encoded = encodeURIComponent(JSON.stringify(x));
-        return "<div class="it"><div class="it0"><div class="it0l">" +
-          "<span style="" + cs[x.unidade] + ";padding:2px 9px;border-radius:12px;font-size:11px;font-weight:800;letter-spacing:1px;">" + x.unidade + "</span>" +
-          "<span style="font-size:10px;color:#94a3b8;">#" + String(i+1).padStart(4,"0") + "</span>" +
-          "</div><span style="font-size:10px;color:#94a3b8;">" + (x.registro||"") + "</span></div>" +
-          "<div class="ib">" +
-          "<div class="if">Data<strong>" + fmt(x.data) + "</strong></div>" +
-          "<div class="if">Horario<strong>" + (x.horario||"-") + "</strong></div>" +
-          "<div class="if">Caminhao<strong>" + x.caminhao + "</strong></div>" +
-          "<div class="if">Reboque<strong>" + (x.reboque||"-") + "</strong></div>" +
-          "<div class="if" style="grid-column:1/-1">Destino<strong>" + x.destino + "</strong></div>" +
-          "<div class="if">Agendado por<strong>" + (x.nome_agendou||"-") + "</strong></div>" +
-          "<div class="if">Contato<strong>" + (x.contato||"-") + "</strong></div>" +
-          "</div>" +
-          "<div class="if0"><div class="im">Motivo: <strong>" + (x.motivo||"Nao informado") + "</strong></div>" +
-          "<div style="display:flex;gap:5px;">" +
-          "<button class="bfin" data-id="" + x.id + "" data-row="" + encoded + "">Finalizar</button>" +
-          "<button class="bedit" data-id="" + x.id + "" data-row="" + encoded + "">Editar</button>" +
-          "<button class="bdel" data-id="" + x.id + "">Excluir</button>" +
-          "</div></div></div>";
-      }).join("");
-      // Finalizar
-      el.querySelectorAll(".bfin").forEach(function(b) {
-        b.addEventListener("click", function() {
+      el.innerHTML = "";
+      if (!d.length) { setEmpty("adm-ls", "Nenhum agendamento pendente."); return; }
+      d.forEach(function(x, i) {
+        var btnsHtml = '<button class="bfin" data-id="' + x.id + '">Finalizar</button><button class="bedit" data-id="' + x.id + '">Editar</button><button class="bdel" data-id="' + x.id + '">Excluir</button>';
+        var card = mkCard(x, i, btnsHtml);
+        card.querySelector(".bfin").addEventListener("click", function() {
           if (!confirm("Finalizar este agendamento?")) return;
-          var row = JSON.parse(decodeURIComponent(b.dataset.row));
           var agora = new Date().toLocaleString("pt-BR");
           api("POST", "finalizados", {
-            unidade: row.unidade, data: row.data, horario: row.horario,
-            caminhao: row.caminhao, reboque: row.reboque, destino: row.destino,
-            motivo: row.motivo, nome_agendou: row.nome_agendou, contato: row.contato,
-            registro: row.registro, finalizado_em: agora
+            unidade: x.unidade, data: x.data, horario: x.horario,
+            caminhao: x.caminhao, reboque: x.reboque, destino: x.destino,
+            motivo: x.motivo, nome_agendou: x.nome_agendou, contato: x.contato,
+            registro: x.registro, finalizado_em: agora
           }).then(function(r1) {
             if (!r1.ok) { tst("Erro ao finalizar.", "#fff", "#dc2626"); return; }
-            api("DELETE", "agendamentos", null, "id=eq." + b.dataset.id).then(function() {
-              rAdm(); cntUp(); tst("Finalizado com sucesso!", "#065f46", "#d1fae5");
+            api("DELETE", "agendamentos", null, "id=eq." + x.id).then(function() {
+              rAdm(); cntUp(); tst("Finalizado!", "#065f46", "#d1fae5");
             });
           });
         });
-      });
-      // Editar
-      el.querySelectorAll(".bedit").forEach(function(b) {
-        b.addEventListener("click", function() {
-          var row = JSON.parse(decodeURIComponent(b.dataset.row));
-          document.getElementById("edit-id").value = row.id;
-          document.getElementById("edit-dt").value = row.data||"";
-          document.getElementById("edit-hr").value = row.horario||"";
-          document.getElementById("edit-ca").value = row.caminhao||"";
-          document.getElementById("edit-re").value = row.reboque||"";
-          document.getElementById("edit-de").value = row.destino||"";
-          document.getElementById("edit-mo").value = row.motivo||"";
+        card.querySelector(".bedit").addEventListener("click", function() {
+          document.getElementById("edit-id").value = x.id;
+          document.getElementById("edit-dt").value = x.data||"";
+          document.getElementById("edit-hr").value = x.horario||"";
+          document.getElementById("edit-ca").value = x.caminhao||"";
+          document.getElementById("edit-re").value = x.reboque||"";
+          document.getElementById("edit-de").value = x.destino||"";
+          document.getElementById("edit-mo").value = x.motivo||"";
           abrirOv("medit");
         });
-      });
-      // Excluir
-      el.querySelectorAll(".bdel").forEach(function(b) {
-        b.addEventListener("click", function() {
-          if (!confirm("Excluir este agendamento?")) return;
-          api("DELETE", "agendamentos", null, "id=eq." + b.dataset.id).then(function() { rAdm(); cntUp(); });
+        card.querySelector(".bdel").addEventListener("click", function() {
+          if (!confirm("Excluir?")) return;
+          api("DELETE", "agendamentos", null, "id=eq." + x.id).then(function() { rAdm(); cntUp(); });
         });
+        el.appendChild(card);
       });
     });
-
   } else if (admTab === "fin") {
     api("GET", "finalizados", null, "order=created_at.desc").then(function(r) { return r.json(); }).then(function(d) {
-      if (!d.length) { el.innerHTML = '<div class="emp">Nenhum agendamento finalizado.</div>'; return; }
-      el.innerHTML = d.map(function(x) {
-        return "<div class="fn"><div class="fn0"><div class="it0l">" +
-          "<span style="" + cs[x.unidade] + ";padding:2px 9px;border-radius:12px;font-size:11px;font-weight:800;letter-spacing:1px;">" + x.unidade + "</span>" +
-          "<span style="background:#d1fae5;color:#065f46;border:1px solid #6ee7b7;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;">FINALIZADO</span>" +
-          "</div><span style="font-size:10px;color:#94a3b8;">" + (x.finalizado_em||"") + "</span></div>" +
-          "<div class="fb2">" +
-          "<div class="if">Data<strong>" + fmt(x.data) + "</strong></div>" +
-          "<div class="if">Horario<strong>" + (x.horario||"-") + "</strong></div>" +
-          "<div class="if">Caminhao<strong>" + x.caminhao + "</strong></div>" +
-          "<div class="if">Reboque<strong>" + (x.reboque||"-") + "</strong></div>" +
-          "<div class="if" style="grid-column:1/-1">Destino<strong>" + x.destino + "</strong></div>" +
-          "<div class="if">Agendado por<strong>" + (x.nome_agendou||"-") + "</strong></div>" +
-          "<div class="if">Contato<strong>" + (x.contato||"-") + "</strong></div>" +
-          "</div>" +
-          "<div class="fn1"><div class="im">Motivo: <strong>" + (x.motivo||"-") + "</strong></div>" +
-          "<button class="bdel" data-id="" + x.id + "">Excluir</button></div></div>";
-      }).join("");
-      el.querySelectorAll(".bdel").forEach(function(b) {
-        b.addEventListener("click", function() {
-          if (!confirm("Excluir do historico?")) return;
-          api("DELETE", "finalizados", null, "id=eq." + b.dataset.id).then(function() { rAdm(); });
-        });
-      });
+      el.innerHTML = "";
+      if (!d.length) { setEmpty("adm-ls", "Nenhum agendamento finalizado."); return; }
+      d.forEach(function(x) { el.appendChild(mkFin(x)); });
     });
-
   } else {
     api("GET", "nao_conformidades", null, "order=created_at.desc").then(function(r) { return r.json(); }).then(function(d) {
-      if (!d.length) { el.innerHTML = '<div class="emp">Nenhuma nao conformidade.</div>'; return; }
-      el.innerHTML = d.map(function(x) {
-        return "<div class="ni"><div class="ni0"><div class="it0l">" +
-          "<span style="background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;padding:2px 9px;border-radius:12px;font-size:11px;font-weight:800;letter-spacing:1px;">" + x.unidade + "</span>" +
-          "<span style="font-size:11px;color:#ef4444;font-weight:600;">" + (x.tipo||"") + "</span>" +
-          "</div><span style="font-size:10px;color:#94a3b8;">" + (x.registro||"") + "</span></div>" +
-          "<div class="nb2">" +
-          "<div class="if">Data<strong>" + fmt(x.data) + "</strong></div>" +
-          "<div class="if">Responsavel<strong>" + (x.responsavel||"-") + "</strong></div>" +
-          "<div class="if" style="grid-column:1/-1">Descricao<strong>" + (x.descricao||"") + "</strong></div>" +
-          (x.acao ? "<div class="if" style="grid-column:1/-1">Acao<strong>" + x.acao + "</strong></div>" : "") +
-          "</div><div class="ni1"><span></span><button class="bdel" data-id="" + x.id + "">Excluir</button></div></div>";
-      }).join("");
-      el.querySelectorAll(".bdel").forEach(function(b) {
-        b.addEventListener("click", function() {
-          if (!confirm("Excluir?")) return;
-          api("DELETE", "nao_conformidades", null, "id=eq." + b.dataset.id).then(function() { rAdm(); });
-        });
-      });
+      el.innerHTML = "";
+      if (!d.length) { setEmpty("adm-ls", "Nenhuma nao conformidade."); return; }
+      d.forEach(function(x) { el.appendChild(mkNC(x)); });
     });
   }
 }
 
-// SALVAR EDICAO
 document.getElementById("btnSalvarEdit").addEventListener("click", function() {
   var id = document.getElementById("edit-id").value;
   api("PATCH", "agendamentos", {
@@ -627,11 +581,10 @@ document.getElementById("btnSalvarEdit").addEventListener("click", function() {
     motivo: document.getElementById("edit-mo").value.trim()
   }, "id=eq." + id).then(function(r) {
     if (!r.ok) { tst("Erro ao salvar.", "#fff", "#dc2626"); return; }
-    fecharOv("medit"); rAdm(); tst("Agendamento atualizado!", "#0a1f14", "#6ee7b7");
+    fecharOv("medit"); rAdm(); tst("Atualizado!", "#0a1f14", "#6ee7b7");
   });
 });
 
-// BOTOES HEADER
 document.getElementById("btnVer").addEventListener("click", function() { rAg(); abrirOv("mov"); });
 document.getElementById("btnNC").addEventListener("click", function() { abrirOv("mnc"); });
 document.getElementById("btnVerNC").addEventListener("click", function() { fecharOv("mnc"); rNC(); abrirOv("mlnc"); });
