@@ -47,11 +47,10 @@ main{max-width:1100px;margin:0 auto;padding:0 20px 48px;}
 .fi input::placeholder,.fi textarea::placeholder{color:#94a3b8;}
 .fi textarea{resize:vertical;min-height:78px;line-height:1.5;}
 .fi input:focus,.fi textarea:focus,.fi select:focus{box-shadow:0 0 0 3px rgba(147,197,253,.45);}
-.sep{grid-column:1/-1;border:none;border-top:1px solid rgba(255,255,255,.1);margin:4px 0;}
-.sec-label{grid-column:1/-1;font-size:10px;font-weight:700;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1px;margin-bottom:-6px;}
 .cf{padding:13px 22px;border-top:1px solid rgba(255,255,255,.07);display:flex;justify-content:flex-end;gap:10px;}
 .bl{padding:8px 16px;border:1px solid rgba(255,255,255,.2);border-radius:8px;background:transparent;color:rgba(255,255,255,.55);font-size:12px;font-weight:600;cursor:pointer;}
 .bag{padding:8px 22px;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;color:#0a1f14;background:linear-gradient(110deg,#6ee7b7,#93c5fd);}
+/* MODAIS */
 .ov{display:none;position:fixed;inset:0;background:rgba(5,15,28,.78);z-index:200;align-items:flex-start;justify-content:center;padding:20px 12px;overflow-y:auto;}
 .ov.on{display:flex;}
 .md{background:#fff;border-radius:14px;width:100%;max-width:820px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4);}
@@ -69,7 +68,7 @@ main{max-width:1100px;margin:0 auto;padding:0 20px 48px;}
 .fb.on{background:linear-gradient(110deg,#1a4a2e,#0f2d4a);color:#fff;border-color:transparent;}
 .fb.rn{background:#dc2626;color:#fff;border-color:transparent;}
 .fb.gd{background:linear-gradient(110deg,#92400e,#b45309);color:#fff;border-color:transparent;}
-#ls,#lnc,#adm-ls{display:flex;flex-direction:column;gap:8px;}
+#ls,#lnc,#lfin{display:flex;flex-direction:column;gap:8px;}
 .it,.ni,.fn{border:1px solid #e2e8f0;border-radius:9px;overflow:hidden;background:#fff;}
 .ni{border-color:#fee2e2;}
 .fn{border-color:#d1fae5;}
@@ -85,20 +84,20 @@ main{max-width:1100px;margin:0 auto;padding:0 20px 48px;}
 .fn1{background:#ecfdf5;border-top-color:#d1fae5;}
 .im{font-size:12px;color:#64748b;flex:1;}
 .im strong{color:#0f172a;font-weight:600;}
+/* BOTOES ACAO */
 .bfin{padding:4px 10px;background:#d1fae5;color:#065f46;border:1px solid #6ee7b7;border-radius:5px;font-size:11px;font-weight:700;cursor:pointer;}
 .bdel{padding:4px 10px;background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;border-radius:5px;font-size:11px;font-weight:700;cursor:pointer;}
 .bedit{padding:4px 10px;background:#fef3c7;color:#92400e;border:1px solid #fcd34d;border-radius:5px;font-size:11px;font-weight:700;cursor:pointer;}
-.bzap{padding:4px 10px;background:#d1fae5;color:#065f46;border:1px solid #34d399;border-radius:5px;font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px;}
 .adm-badge{background:#ffd700;color:#0f2d4a;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:800;letter-spacing:1px;}
-.wbadge{background:#25d366;color:#fff;padding:2px 7px;border-radius:8px;font-size:10px;font-weight:700;}
 .emp{text-align:center;padding:36px 0;color:#94a3b8;font-size:13px;}
 .ld{text-align:center;padding:28px;color:#94a3b8;font-size:13px;}
 .sp{display:inline-block;width:18px;height:18px;border:2px solid #e2e8f0;border-top-color:#0f2d4a;border-radius:50%;animation:spin .7s linear infinite;margin-bottom:6px;}
 @keyframes spin{to{transform:rotate(360deg)}}
-.edit-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
 .toast{position:fixed;bottom:18px;left:12px;right:12px;max-width:340px;margin:0 auto;padding:10px 16px;border-radius:9px;font-size:13px;font-weight:700;box-shadow:0 4px 20px rgba(0,0,0,.2);opacity:0;transform:translateY(8px);transition:all .3s;z-index:999;pointer-events:none;text-align:center;}
 .toast.on{opacity:1;transform:none;}
-@media(max-width:560px){.fg,.edit-row{grid-template-columns:1fr;}.ib,.nb2,.fb2{grid-column:1fr;grid-template-columns:1fr;}.tab{padding:8px 12px;font-size:11px;}.ln{font-size:13px;}.bnc .t,.bver .t,.badm .t{display:none;}}
+/* MODAL EDIT */
+.edit-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+@media(max-width:560px){.fg,.edit-row{grid-template-columns:1fr;}.ib,.nb2,.fb2{grid-template-columns:1fr;}.tab{padding:8px 12px;font-size:11px;}.ln{font-size:13px;}.bnc .t,.bver .t,.badm .t{display:none;}}
 </style>
 </head>
 <body>
@@ -136,10 +135,6 @@ main{max-width:1100px;margin:0 auto;padding:0 20px 48px;}
 <div class="fi"><label>Frota Reboque Prancha</label><input type="text" id="cem-re" placeholder="Ex: 5678"></div>
 <div class="fi ff"><label>Local de Destino</label><input type="text" id="cem-de" placeholder="Ex: Rodovia BR-101, km 45"></div>
 <div class="fi ff"><label>Motivo do Transporte</label><textarea id="cem-mo" placeholder="Descreva o motivo..."></textarea></div>
-<hr class="sep">
-<div class="sec-label">Solicitante</div>
-<div class="fi"><label>Nome de quem solicita</label><input type="text" id="cem-nm" placeholder="Ex: Joao Silva"></div>
-<div class="fi"><label>WhatsApp (com DDD)</label><input type="tel" id="cem-zap" placeholder="Ex: 16991234567"></div>
 </div></div>
 <div class="cf"><button class="bl" id="lp-cem">Limpar</button><button class="bag" id="ag-cem">+ Agendar</button></div>
 </div></div>
@@ -154,10 +149,6 @@ main{max-width:1100px;margin:0 auto;padding:0 20px 48px;}
 <div class="fi"><label>Frota Reboque Prancha</label><input type="text" id="cemma-re" placeholder="Ex: 5678"></div>
 <div class="fi ff"><label>Local de Destino</label><input type="text" id="cemma-de" placeholder="Ex: Rodovia BR-101, km 45"></div>
 <div class="fi ff"><label>Motivo do Transporte</label><textarea id="cemma-mo" placeholder="Descreva o motivo..."></textarea></div>
-<hr class="sep">
-<div class="sec-label">Solicitante</div>
-<div class="fi"><label>Nome de quem solicita</label><input type="text" id="cemma-nm" placeholder="Ex: Joao Silva"></div>
-<div class="fi"><label>WhatsApp (com DDD)</label><input type="tel" id="cemma-zap" placeholder="Ex: 16991234567"></div>
 </div></div>
 <div class="cf"><button class="bl" id="lp-cemma">Limpar</button><button class="bag" id="ag-cemma">+ Agendar</button></div>
 </div></div>
@@ -172,10 +163,6 @@ main{max-width:1100px;margin:0 auto;padding:0 20px 48px;}
 <div class="fi"><label>Frota Reboque Prancha</label><input type="text" id="coplasa-re" placeholder="Ex: 5678"></div>
 <div class="fi ff"><label>Local de Destino</label><input type="text" id="coplasa-de" placeholder="Ex: Rodovia BR-101, km 45"></div>
 <div class="fi ff"><label>Motivo do Transporte</label><textarea id="coplasa-mo" placeholder="Descreva o motivo..."></textarea></div>
-<hr class="sep">
-<div class="sec-label">Solicitante</div>
-<div class="fi"><label>Nome de quem solicita</label><input type="text" id="coplasa-nm" placeholder="Ex: Joao Silva"></div>
-<div class="fi"><label>WhatsApp (com DDD)</label><input type="tel" id="coplasa-zap" placeholder="Ex: 16991234567"></div>
 </div></div>
 <div class="cf"><button class="bl" id="lp-coplasa">Limpar</button><button class="bag" id="ag-coplasa">+ Agendar</button></div>
 </div></div>
@@ -237,7 +224,7 @@ main{max-width:1100px;margin:0 auto;padding:0 20px 48px;}
 <div class="mh gold"><h2>Acesso ADM</h2><button class="mc" id="fMadmLogin">x</button></div>
 <div class="mb">
 <div style="text-align:center;padding:10px 0 20px;">
-<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="1.5" style="margin-bottom:8px;display:block;margin-left:auto;margin-right:auto;"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="1.5" style="margin-bottom:8px;"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
 <p style="font-size:13px;color:#64748b;">Digite a senha para acessar o painel ADM</p>
 </div>
 <div class="fi" style="margin-bottom:16px;"><label>Senha ADM</label><input type="password" id="adm-senha" placeholder="Digite a senha..."></div>
@@ -251,8 +238,8 @@ main{max-width:1100px;margin:0 auto;padding:0 20px 48px;}
 <div class="mh gold"><h2>Painel ADM <span class="adm-badge">RESTRITO</span></h2><button class="mc" id="fMadm">x</button></div>
 <div class="mb">
 <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
-<button class="fb gd" id="adm-tab-ag">Agendamentos</button>
-<button class="fb" id="adm-tab-fin">Finalizados</button>
+<button class="fb gd on" id="adm-tab-ag">Agendamentos</button>
+<button class="fb" id="adm-tab-fin" style="">Finalizados</button>
 <button class="fb rn" id="adm-tab-nc">Nao Conformidades</button>
 </div>
 <div id="adm-ls"></div>
@@ -260,23 +247,19 @@ main{max-width:1100px;margin:0 auto;padding:0 20px 48px;}
 
 <!-- MODAL EDITAR -->
 <div class="ov" id="medit">
-<div class="md" style="max-width:580px;">
+<div class="md" style="max-width:560px;">
 <div class="mh gold"><h2>Editar Agendamento</h2><button class="mc" id="fMedit">x</button></div>
 <div class="mb">
 <input type="hidden" id="edit-id">
 <div class="edit-row">
 <div class="fi"><label>Data</label><input type="date" id="edit-dt"></div>
 <div class="fi"><label>Horario</label><input type="time" id="edit-hr"></div>
-<div class="fi"><label>Caminhao Prancha</label><input type="text" id="edit-ca"></div>
-<div class="fi"><label>Reboque Prancha</label><input type="text" id="edit-re"></div>
+<div class="fi"><label>Caminhao Prancha</label><input type="text" id="edit-ca" placeholder="Ex: 1234"></div>
+<div class="fi"><label>Reboque Prancha</label><input type="text" id="edit-re" placeholder="Ex: 5678"></div>
 </div>
-<div class="fi" style="margin-bottom:10px;"><label>Destino</label><input type="text" id="edit-de"></div>
-<div class="fi" style="margin-bottom:10px;"><label>Motivo</label><textarea id="edit-mo" style="min-height:55px;"></textarea></div>
-<div class="edit-row">
-<div class="fi"><label>Nome Solicitante</label><input type="text" id="edit-nm"></div>
-<div class="fi"><label>WhatsApp</label><input type="tel" id="edit-zap"></div>
-</div>
-<div style="display:flex;justify-content:flex-end;gap:8px;border-top:1px solid #e2e8f0;padding-top:12px;margin-top:4px;">
+<div class="fi" style="margin-bottom:12px;"><label>Destino</label><input type="text" id="edit-de"></div>
+<div class="fi" style="margin-bottom:16px;"><label>Motivo</label><textarea id="edit-mo" style="min-height:60px;"></textarea></div>
+<div style="display:flex;justify-content:flex-end;gap:8px;border-top:1px solid #e2e8f0;padding-top:12px;">
 <button class="bl" id="fMedit2" style="border-color:#e2e8f0;color:#64748b;background:#fff;">Cancelar</button>
 <button id="btnSalvarEdit" style="padding:9px 22px;border:none;border-radius:8px;background:linear-gradient(110deg,#92400e,#b45309);color:#fff;font-size:13px;font-weight:700;cursor:pointer;">Salvar</button>
 </div>
@@ -291,7 +274,6 @@ var SURL = 'https://loehgloomiimnwwtlrmk.supabase.co';
 var SKEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxvZWhnbG9vbWlpbW53d3Rscm1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcyMTYxMjgsImV4cCI6MjA5Mjc5MjEyOH0.mQnRUJKTfWdU-R1y0hISGLljEW8O6wMrPe0ldXI6ct8';
 var SENHA = 'moreno2026';
 var admOk = false;
-var admTab = 'ag';
 
 function api(method, table, body, filter) {
   var url = SURL + '/rest/v1/' + table;
@@ -306,13 +288,7 @@ function api(method, table, body, filter) {
 
 function fmt(d){if(!d)return'-';var p=d.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
 
-function zapLink(tel, msg) {
-  var num = tel.replace(/\D/g,'');
-  if (num.length <= 11) num = '55' + num;
-  return 'https://wa.me/' + num + '?text=' + encodeURIComponent(msg);
-}
-
-// TABS
+// TABS FORMULARIO
 var tabs=['cem','cemma','coplasa'];
 tabs.forEach(function(u){
   document.getElementById('tab-'+u).addEventListener('click',function(){
@@ -320,7 +296,7 @@ tabs.forEach(function(u){
     this.classList.add('on');document.getElementById('p-'+u).classList.add('on');
   });
   document.getElementById('lp-'+u).addEventListener('click',function(){
-    ['dt','hr','ca','re','de','mo','nm','zap'].forEach(function(f){document.getElementById(u+'-'+f).value='';});
+    ['dt','hr','ca','re','de','mo'].forEach(function(f){document.getElementById(u+'-'+f).value='';});
   });
   document.getElementById('ag-'+u).addEventListener('click',function(){
     var dt=document.getElementById(u+'-dt').value;
@@ -329,17 +305,14 @@ tabs.forEach(function(u){
     var re=document.getElementById(u+'-re').value.trim();
     var de=document.getElementById(u+'-de').value.trim();
     var mo=document.getElementById(u+'-mo').value.trim();
-    var nm=document.getElementById(u+'-nm').value.trim();
-    var zap=document.getElementById(u+'-zap').value.trim();
     if(!dt||!hr||!ca||!de){tst('Preencha data, horario, frota e destino.','#92400e','#fef3c7');return;}
     var btn=document.getElementById('ag-'+u);
     btn.textContent='Salvando...';btn.disabled=true;
-    api('POST','agendamentos',{unidade:u.toUpperCase(),data:dt,horario:hr,caminhao:ca,reboque:re,destino:de,motivo:mo,nome_solicitante:nm,whatsapp:zap,registro:new Date().toLocaleString('pt-BR'),status:'pendente'}).then(function(r){
+    api('POST','agendamentos',{unidade:u.toUpperCase(),data:dt,horario:hr,caminhao:ca,reboque:re,destino:de,motivo:mo,registro:new Date().toLocaleString('pt-BR'),status:'pendente'}).then(function(r){
       btn.textContent='+ Agendar';btn.disabled=false;
       if(!r.ok){tst('Erro ao salvar.','#fff','#dc2626');return;}
-      ['dt','hr','ca','re','de','mo','nm','zap'].forEach(function(f){document.getElementById(u+'-'+f).value='';});
-      cntUp();
-      tst('Agendamento enviado!','#0a1f14','#6ee7b7');
+      ['dt','hr','ca','re','de','mo'].forEach(function(f){document.getElementById(u+'-'+f).value='';});
+      cntUp();tst('Agendamento salvo para todos!','#0a1f14','#6ee7b7');
     }).catch(function(){btn.textContent='+ Agendar';btn.disabled=false;tst('Erro de conexao.','#fff','#dc2626');});
   });
 });
@@ -351,22 +324,30 @@ function cntUp(){
   }).catch(function(){});
 }
 
-function fmt(d){if(!d)return'-';var p=d.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
-
-var cs={CEM:'background:#e0f2fe;color:#0369a1;border:1px solid #7dd3fc',CEMMA:'background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd',COPLASA:'background:#dcfce7;color:#15803d;border:1px solid #86efac'};
-
-// RENDER AG PENDENTES (publico - so finalizar, sem excluir/editar)
+// RENDER AGENDAMENTOS MODAL
 var fAg='Todos';
 function rAg(){
   var el=document.getElementById('ls');
   el.innerHTML='<div class="ld"><div class="sp"></div><br>Carregando...</div>';
-  api('GET','agendamentos',null,'status=eq.pendente&order=created_at.desc').then(function(r){return r.json();}).then(function(d){
+  var filter='status=eq.pendente&order=created_at.desc';
+  api('GET','agendamentos',null,filter).then(function(r){return r.json();}).then(function(d){
     var f=fAg==='Todos'?d:d.filter(function(x){return x.unidade===fAg;});
     if(!f.length){el.innerHTML='<div class="emp">Nenhum agendamento pendente.</div>';return;}
+    var cs={CEM:'background:#e0f2fe;color:#0369a1;border:1px solid #7dd3fc',CEMMA:'background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd',COPLASA:'background:#dcfce7;color:#15803d;border:1px solid #86efac'};
     el.innerHTML=f.map(function(x,i){
-      var solicitante = (x.nome_solicitante||x.whatsapp) ? '<div class="if" style="grid-column:1/-1"><span style="background:#dbeafe;color:#1e40af;padding:2px 8px;border-radius:8px;font-size:10px;font-weight:700;">SOLICITANTE</span><strong style="margin-top:3px;display:block;">'+(x.nome_solicitante||'-')+(x.whatsapp?' &nbsp;|&nbsp; <span class="wbadge">'+x.whatsapp+'</span>':'')+'</strong></div>' : '';
-      return '<div class="it"><div class="it0"><div class="it0l"><span style="'+cs[x.unidade]+';padding:2px 9px;border-radius:12px;font-size:11px;font-weight:800;letter-spacing:1px;">'+x.unidade+'</span><span style="font-size:10px;color:#94a3b8;">#'+String(i+1).padStart(4,'0')+'</span></div><span style="font-size:10px;color:#94a3b8;">'+(x.registro||'')+'</span></div><div class="ib"><div class="if">Data<strong>'+fmt(x.data)+'</strong></div><div class="if">Horario<strong>'+(x.horario||'-')+'</strong></div><div class="if">Caminhao<strong>'+x.caminhao+'</strong></div><div class="if">Reboque<strong>'+(x.reboque||'-')+'</strong></div><div class="if" style="grid-column:1/-1">Destino<strong>'+x.destino+'</strong></div>'+solicitante+'</div><div class="if0"><div class="im">Motivo: <strong>'+(x.motivo||'Nao informado')+'</strong></div></div></div>';
+      return '<div class="it"><div class="it0"><div class="it0l"><span style="'+cs[x.unidade]+';padding:2px 9px;border-radius:12px;font-size:11px;font-weight:800;letter-spacing:1px;">'+x.unidade+'</span><span style="font-size:10px;color:#94a3b8;">#'+String(i+1).padStart(4,'0')+'</span></div><span style="font-size:10px;color:#94a3b8;">'+(x.registro||'')+'</span></div><div class="ib"><div class="if">Data<strong>'+fmt(x.data)+'</strong></div><div class="if">Horario<strong>'+(x.horario||'-')+'</strong></div><div class="if">Caminhao<strong>'+x.caminhao+'</strong></div><div class="if">Reboque<strong>'+(x.reboque||'-')+'</strong></div><div class="if" style="grid-column:1/-1">Destino<strong>'+x.destino+'</strong></div></div><div class="if0"><div class="im">Motivo: <strong>'+(x.motivo||'Nao informado')+'</strong></div><button class="bfin" data-id="'+x.id+'" data-row="'+encodeURIComponent(JSON.stringify(x))+'">Finalizar</button></div></div>';
     }).join('');
+    el.querySelectorAll('.bfin').forEach(function(b){
+      b.addEventListener('click',function(){
+        if(!confirm('Marcar como finalizado?'))return;
+        var row=JSON.parse(decodeURIComponent(b.dataset.row));
+        var agora=new Date().toLocaleString('pt-BR');
+        api('POST','finalizados',{unidade:row.unidade,data:row.data,horario:row.horario,caminhao:row.caminhao,reboque:row.reboque,destino:row.destino,motivo:row.motivo,registro:row.registro,finalizado_em:agora}).then(function(r1){
+          if(!r1.ok){tst('Erro ao finalizar.','#fff','#dc2626');return;}
+          api('DELETE','agendamentos',null,'id=eq.'+b.dataset.id).then(function(){rAg();cntUp();tst('Agendamento finalizado!','#065f46','#d1fae5');});
+        });
+      });
+    });
   }).catch(function(){el.innerHTML='<div class="emp">Erro ao carregar.</div>';});
 }
 
@@ -386,7 +367,7 @@ function rNC(){
     var f=fNC==='Todos'?d:d.filter(function(x){return x.unidade===fNC;});
     if(!f.length){el.innerHTML='<div class="emp">Nenhuma nao conformidade.</div>';return;}
     el.innerHTML=f.map(function(x){
-      return '<div class="ni"><div class="ni0"><div class="it0l"><span style="background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;padding:2px 9px;border-radius:12px;font-size:11px;font-weight:800;letter-spacing:1px;">'+x.unidade+'</span><span style="font-size:11px;color:#ef4444;font-weight:600;">'+(x.tipo||'')+'</span></div><span style="font-size:10px;color:#94a3b8;">'+(x.registro||'')+'</span></div><div class="nb2"><div class="if">Data<strong>'+fmt(x.data)+'</strong></div><div class="if">Responsavel<strong>'+(x.responsavel||'-')+'</strong></div><div class="if" style="grid-column:1/-1">Descricao<strong>'+(x.descricao||'')+'</strong></div>'+(x.acao?'<div class="if" style="grid-column:1/-1">Acao<strong>'+x.acao+'</strong></div>':'')+'</div></div>';
+      return '<div class="ni"><div class="ni0"><div class="it0l"><span style="background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;padding:2px 9px;border-radius:12px;font-size:11px;font-weight:800;letter-spacing:1px;">'+x.unidade+'</span><span style="font-size:11px;color:#ef4444;font-weight:600;">'+(x.tipo||'')+'</span></div><span style="font-size:10px;color:#94a3b8;">'+(x.registro||'')+'</span></div><div class="nb2"><div class="if">Data<strong>'+fmt(x.data)+'</strong></div><div class="if">Horario<strong>'+(x.hora||'-')+'</strong></div><div class="if">Responsavel<strong>'+(x.responsavel||'-')+'</strong></div><div class="if" style="grid-column:1/-1">Descricao<strong>'+(x.descricao||'')+'</strong></div>'+(x.acao?'<div class="if" style="grid-column:1/-1">Acao<strong>'+x.acao+'</strong></div>':'')+'</div></div>';
     }).join('');
   }).catch(function(){el.innerHTML='<div class="emp">Erro.</div>';});
 }
@@ -399,15 +380,14 @@ function rNC(){
 });
 
 // ADM
+var admTab='ag';
 document.getElementById('btnAdm').addEventListener('click',function(){
   if(admOk){abrirAdm();}else{document.getElementById('madm-login').classList.add('on');}
 });
 document.getElementById('btnEntrarAdm').addEventListener('click',function(){
   if(document.getElementById('adm-senha').value===SENHA){
-    admOk=true;
-    document.getElementById('madm-login').classList.remove('on');
-    document.getElementById('adm-senha').value='';
-    document.getElementById('adm-erro').style.display='none';
+    admOk=true;document.getElementById('madm-login').classList.remove('on');
+    document.getElementById('adm-senha').value='';document.getElementById('adm-erro').style.display='none';
     abrirAdm();
   } else {
     document.getElementById('adm-erro').style.display='block';
@@ -417,104 +397,49 @@ document.getElementById('adm-senha').addEventListener('keydown',function(e){if(e
 
 function abrirAdm(){rAdm();document.getElementById('madm').classList.add('on');}
 
-document.getElementById('adm-tab-ag').addEventListener('click',function(){admTab='ag';rAdm();});
-document.getElementById('adm-tab-fin').addEventListener('click',function(){admTab='fin';rAdm();});
-document.getElementById('adm-tab-nc').addEventListener('click',function(){admTab='nc';rAdm();});
+document.getElementById('adm-tab-ag').addEventListener('click',function(){admTab='ag';document.querySelectorAll('#madm .fb').forEach(function(b){b.classList.remove('on','rn','gd');});this.classList.add('gd','on');rAdm();});
+document.getElementById('adm-tab-fin').addEventListener('click',function(){admTab='fin';document.querySelectorAll('#madm .fb').forEach(function(b){b.classList.remove('on','rn','gd');});this.classList.add('on');rAdm();});
+document.getElementById('adm-tab-nc').addEventListener('click',function(){admTab='nc';document.querySelectorAll('#madm .fb').forEach(function(b){b.classList.remove('on','rn','gd');});this.classList.add('rn');rAdm();});
 
 function rAdm(){
   var el=document.getElementById('adm-ls');
   el.innerHTML='<div class="ld"><div class="sp"></div><br>Carregando...</div>';
-
   if(admTab==='ag'){
     api('GET','agendamentos',null,'status=eq.pendente&order=created_at.desc').then(function(r){return r.json();}).then(function(d){
       if(!d.length){el.innerHTML='<div class="emp">Nenhum agendamento pendente.</div>';return;}
+      var cs={CEM:'background:#e0f2fe;color:#0369a1;border:1px solid #7dd3fc',CEMMA:'background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd',COPLASA:'background:#dcfce7;color:#15803d;border:1px solid #86efac'};
       el.innerHTML=d.map(function(x,i){
-        var zBtn = x.whatsapp ? '<button class="bzap" data-tel="'+x.whatsapp+'" data-nome="'+(x.nome_solicitante||'').replace(/"/g,'')+'">'+
-          '<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.553 4.103 1.522 5.83L.057 23.083a.75.75 0 00.93.903l5.4-1.453A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.9 0-3.7-.497-5.262-1.367l-.364-.21-3.205.862.875-3.126-.228-.373A9.957 9.957 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>Zap</button>' : '';
-        var solicitante = (x.nome_solicitante||x.whatsapp) ? '<div class="if" style="grid-column:1/-1">Solicitante<strong>'+(x.nome_solicitante||'-')+(x.whatsapp?' ('+x.whatsapp+')':'')+'</strong></div>' : '';
-        return '<div class="it"><div class="it0"><div class="it0l"><span style="'+cs[x.unidade]+';padding:2px 9px;border-radius:12px;font-size:11px;font-weight:800;letter-spacing:1px;">'+x.unidade+'</span><span style="font-size:10px;color:#94a3b8;">#'+String(i+1).padStart(4,'0')+'</span></div><span style="font-size:10px;color:#94a3b8;">'+(x.registro||'')+'</span></div><div class="ib"><div class="if">Data<strong>'+fmt(x.data)+'</strong></div><div class="if">Horario<strong>'+(x.horario||'-')+'</strong></div><div class="if">Caminhao<strong>'+x.caminhao+'</strong></div><div class="if">Reboque<strong>'+(x.reboque||'-')+'</strong></div><div class="if" style="grid-column:1/-1">Destino<strong>'+x.destino+'</strong></div>'+solicitante+'</div><div class="if0"><div class="im">Motivo: <strong>'+(x.motivo||'Nao informado')+'</strong></div><div style="display:flex;gap:5px;flex-wrap:wrap;">'+zBtn+'<button class="bfin" data-id="'+x.id+'" data-row="'+encodeURIComponent(JSON.stringify(x))+'">Finalizar</button><button class="bedit" data-id="'+x.id+'" data-row="'+encodeURIComponent(JSON.stringify(x))+'">Editar</button><button class="bdel" data-id="'+x.id+'">Excluir</button></div></div></div>';
+        return '<div class="it"><div class="it0"><div class="it0l"><span style="'+cs[x.unidade]+';padding:2px 9px;border-radius:12px;font-size:11px;font-weight:800;letter-spacing:1px;">'+x.unidade+'</span><span style="font-size:10px;color:#94a3b8;">#'+String(i+1).padStart(4,'0')+'</span></div><span style="font-size:10px;color:#94a3b8;">'+(x.registro||'')+'</span></div><div class="ib"><div class="if">Data<strong>'+fmt(x.data)+'</strong></div><div class="if">Horario<strong>'+(x.horario||'-')+'</strong></div><div class="if">Caminhao<strong>'+x.caminhao+'</strong></div><div class="if">Reboque<strong>'+(x.reboque||'-')+'</strong></div><div class="if" style="grid-column:1/-1">Destino<strong>'+x.destino+'</strong></div></div><div class="if0"><div class="im">Motivo: <strong>'+(x.motivo||'Nao informado')+'</strong></div><div style="display:flex;gap:5px;"><button class="bedit" data-id="'+x.id+'" data-row="'+encodeURIComponent(JSON.stringify(x))+'">Editar</button><button class="bdel" data-id="'+x.id+'">Excluir</button></div></div></div>';
       }).join('');
-
-      // Botao zap — abre whatsapp com mensagem de confirmacao
-      el.querySelectorAll('.bzap').forEach(function(b){
-        b.addEventListener('click',function(){
-          var nome = b.dataset.nome || 'Solicitante';
-          var msg = 'Ola ' + nome + '! Seu agendamento de batedor foi recebido e esta sendo processado pela equipe do Grupo Moreno. Em breve retornaremos com a confirmacao.';
-          window.open(zapLink(b.dataset.tel, msg), '_blank');
-        });
-      });
-
-      el.querySelectorAll('.bfin').forEach(function(b){
-        b.addEventListener('click',function(){
-          if(!confirm('Finalizar este agendamento?'))return;
-          var row=JSON.parse(decodeURIComponent(b.dataset.row));
-          var agora=new Date().toLocaleString('pt-BR');
-          api('POST','finalizados',{unidade:row.unidade,data:row.data,horario:row.horario,caminhao:row.caminhao,reboque:row.reboque,destino:row.destino,motivo:row.motivo,nome_solicitante:row.nome_solicitante,whatsapp:row.whatsapp,registro:row.registro,finalizado_em:agora}).then(function(r1){
-            if(!r1.ok){tst('Erro ao finalizar.','#fff','#dc2626');return;}
-            api('DELETE','agendamentos',null,'id=eq.'+b.dataset.id).then(function(){
-              // Se tiver whatsapp, abre mensagem de conclusao
-              if(row.whatsapp){
-                var nome=row.nome_solicitante||'Solicitante';
-                var msg='Ola '+nome+'! Seu agendamento de batedor foi CONCLUIDO com sucesso. Data: '+fmt(row.data)+' | Horario: '+(row.horario||'-')+' | Destino: '+row.destino+'. Obrigado, Grupo Moreno.';
-                window.open(zapLink(row.whatsapp,msg),'_blank');
-              }
-              rAdm();cntUp();tst('Agendamento finalizado!','#065f46','#d1fae5');
-            });
-          });
-        });
-      });
-
-      el.querySelectorAll('.bdel').forEach(function(b){
-        b.addEventListener('click',function(){
-          if(!confirm('Excluir?'))return;
-          api('DELETE','agendamentos',null,'id=eq.'+b.dataset.id).then(function(){rAdm();cntUp();});
-        });
-      });
-
-      el.querySelectorAll('.bedit').forEach(function(b){
-        b.addEventListener('click',function(){
-          var row=JSON.parse(decodeURIComponent(b.dataset.row));
-          document.getElementById('edit-id').value=row.id;
-          document.getElementById('edit-dt').value=row.data||'';
-          document.getElementById('edit-hr').value=row.horario||'';
-          document.getElementById('edit-ca').value=row.caminhao||'';
-          document.getElementById('edit-re').value=row.reboque||'';
-          document.getElementById('edit-de').value=row.destino||'';
-          document.getElementById('edit-mo').value=row.motivo||'';
-          document.getElementById('edit-nm').value=row.nome_solicitante||'';
-          document.getElementById('edit-zap').value=row.whatsapp||'';
-          document.getElementById('medit').classList.add('on');
-        });
-      });
+      el.querySelectorAll('.bdel').forEach(function(b){b.addEventListener('click',function(){if(!confirm('Excluir?'))return;api('DELETE','agendamentos',null,'id=eq.'+b.dataset.id).then(function(){rAdm();cntUp();});});});
+      el.querySelectorAll('.bedit').forEach(function(b){b.addEventListener('click',function(){
+        var row=JSON.parse(decodeURIComponent(b.dataset.row));
+        document.getElementById('edit-id').value=row.id;
+        document.getElementById('edit-dt').value=row.data||'';
+        document.getElementById('edit-hr').value=row.horario||'';
+        document.getElementById('edit-ca').value=row.caminhao||'';
+        document.getElementById('edit-re').value=row.reboque||'';
+        document.getElementById('edit-de').value=row.destino||'';
+        document.getElementById('edit-mo').value=row.motivo||'';
+        document.getElementById('medit').classList.add('on');
+      });});
     });
-
   } else if(admTab==='fin'){
     api('GET','finalizados',null,'order=created_at.desc').then(function(r){return r.json();}).then(function(d){
       if(!d.length){el.innerHTML='<div class="emp">Nenhum agendamento finalizado.</div>';return;}
+      var cs={CEM:'background:#e0f2fe;color:#0369a1;border:1px solid #7dd3fc',CEMMA:'background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd',COPLASA:'background:#dcfce7;color:#15803d;border:1px solid #86efac'};
       el.innerHTML=d.map(function(x,i){
-        var zBtn = x.whatsapp ? '<button class="bzap" data-tel="'+x.whatsapp+'" data-nome="'+(x.nome_solicitante||'').replace(/"/g,'')+'">'+
-          '<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.553 4.103 1.522 5.83L.057 23.083a.75.75 0 00.93.903l5.4-1.453A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.9 0-3.7-.497-5.262-1.367l-.364-.21-3.205.862.875-3.126-.228-.373A9.957 9.957 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>Zap</button>' : '';
-        return '<div class="fn"><div class="fn0"><div class="it0l"><span style="'+cs[x.unidade]+';padding:2px 9px;border-radius:12px;font-size:11px;font-weight:800;letter-spacing:1px;">'+x.unidade+'</span><span style="background:#d1fae5;color:#065f46;border:1px solid #6ee7b7;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;">FINALIZADO</span></div><span style="font-size:10px;color:#94a3b8;">'+(x.finalizado_em||'')+'</span></div><div class="fb2"><div class="if">Data<strong>'+fmt(x.data)+'</strong></div><div class="if">Horario<strong>'+(x.horario||'-')+'</strong></div><div class="if">Caminhao<strong>'+x.caminhao+'</strong></div><div class="if">Reboque<strong>'+(x.reboque||'-')+'</strong></div><div class="if" style="grid-column:1/-1">Destino<strong>'+x.destino+'</strong></div>'+(x.nome_solicitante?'<div class="if" style="grid-column:1/-1">Solicitante<strong>'+x.nome_solicitante+(x.whatsapp?' ('+x.whatsapp+')':'')+'</strong></div>':'')+'</div><div class="fn1"><div class="im">Motivo: <strong>'+(x.motivo||'-')+'</strong></div><div style="display:flex;gap:5px;">'+zBtn+'<button class="bdel" data-id="'+x.id+'">Excluir</button></div></div></div>';
+        return '<div class="fn"><div class="fn0"><div class="it0l"><span style="'+cs[x.unidade]+';padding:2px 9px;border-radius:12px;font-size:11px;font-weight:800;letter-spacing:1px;">'+x.unidade+'</span><span style="background:#d1fae5;color:#065f46;border:1px solid #6ee7b7;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;">FINALIZADO</span></div><span style="font-size:10px;color:#94a3b8;">'+( x.finalizado_em||'')+'</span></div><div class="fb2"><div class="if">Data<strong>'+fmt(x.data)+'</strong></div><div class="if">Horario<strong>'+(x.horario||'-')+'</strong></div><div class="if">Caminhao<strong>'+x.caminhao+'</strong></div><div class="if">Reboque<strong>'+(x.reboque||'-')+'</strong></div><div class="if" style="grid-column:1/-1">Destino<strong>'+x.destino+'</strong></div></div><div class="fn1"><div class="im">Motivo: <strong>'+(x.motivo||'Nao informado')+'</strong></div><button class="bdel" data-id="'+x.id+'" data-tb="finalizados">Excluir</button></div></div>';
       }).join('');
-      el.querySelectorAll('.bzap').forEach(function(b){
-        b.addEventListener('click',function(){
-          var nome=b.dataset.nome||'Solicitante';
-          var msg='Ola '+nome+'! Seu agendamento foi concluido. Obrigado, Grupo Moreno.';
-          window.open(zapLink(b.dataset.tel,msg),'_blank');
-        });
-      });
-      el.querySelectorAll('.bdel').forEach(function(b){
-        b.addEventListener('click',function(){if(!confirm('Excluir?'))return;api('DELETE','finalizados',null,'id=eq.'+b.dataset.id).then(function(){rAdm();});});
-      });
+      el.querySelectorAll('.bdel').forEach(function(b){b.addEventListener('click',function(){if(!confirm('Excluir do historico?'))return;api('DELETE',b.dataset.tb||'finalizados',null,'id=eq.'+b.dataset.id).then(function(){rAdm();});});});
     });
-
   } else {
     api('GET','nao_conformidades',null,'order=created_at.desc').then(function(r){return r.json();}).then(function(d){
       if(!d.length){el.innerHTML='<div class="emp">Nenhuma nao conformidade.</div>';return;}
       el.innerHTML=d.map(function(x){
-        return '<div class="ni"><div class="ni0"><div class="it0l"><span style="background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;padding:2px 9px;border-radius:12px;font-size:11px;font-weight:800;letter-spacing:1px;">'+x.unidade+'</span><span style="font-size:11px;color:#ef4444;font-weight:600;">'+(x.tipo||'')+'</span></div><span style="font-size:10px;color:#94a3b8;">'+(x.registro||'')+'</span></div><div class="nb2"><div class="if">Data<strong>'+fmt(x.data)+'</strong></div><div class="if">Responsavel<strong>'+(x.responsavel||'-')+'</strong></div><div class="if" style="grid-column:1/-1">Descricao<strong>'+(x.descricao||'')+'</strong></div>'+(x.acao?'<div class="if" style="grid-column:1/-1">Acao<strong>'+x.acao+'</strong></div>':'')+'</div><div class="ni1"><span></span><button class="bdel" data-id="'+x.id+'">Excluir</button></div></div>';
+        return '<div class="ni"><div class="ni0"><div class="it0l"><span style="background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;padding:2px 9px;border-radius:12px;font-size:11px;font-weight:800;letter-spacing:1px;">'+x.unidade+'</span><span style="font-size:11px;color:#ef4444;font-weight:600;">'+(x.tipo||'')+'</span></div><span style="font-size:10px;color:#94a3b8;">'+(x.registro||'')+'</span></div><div class="nb2"><div class="if">Data<strong>'+fmt(x.data)+'</strong></div><div class="if">Responsavel<strong>'+(x.responsavel||'-')+'</strong></div><div class="if" style="grid-column:1/-1">Descricao<strong>'+(x.descricao||'')+'</strong></div>'+(x.acao?'<div class="if" style="grid-column:1/-1">Acao<strong>'+x.acao+'</strong></div>':'')+'</div><div class="ni1"><span></span><button class="bdel" data-id="'+x.id+'" data-tb="nao_conformidades">Excluir</button></div></div>';
       }).join('');
-      el.querySelectorAll('.bdel').forEach(function(b){b.addEventListener('click',function(){if(!confirm('Excluir?'))return;api('DELETE','nao_conformidades',null,'id=eq.'+b.dataset.id).then(function(){rAdm();});});});
+      el.querySelectorAll('.bdel').forEach(function(b){b.addEventListener('click',function(){if(!confirm('Excluir?'))return;api('DELETE',b.dataset.tb,null,'id=eq.'+b.dataset.id).then(function(){rAdm();});});});
     });
   }
 }
@@ -522,7 +447,7 @@ function rAdm(){
 // SALVAR EDICAO
 document.getElementById('btnSalvarEdit').addEventListener('click',function(){
   var id=document.getElementById('edit-id').value;
-  var dados={data:document.getElementById('edit-dt').value,horario:document.getElementById('edit-hr').value,caminhao:document.getElementById('edit-ca').value.trim(),reboque:document.getElementById('edit-re').value.trim(),destino:document.getElementById('edit-de').value.trim(),motivo:document.getElementById('edit-mo').value.trim(),nome_solicitante:document.getElementById('edit-nm').value.trim(),whatsapp:document.getElementById('edit-zap').value.trim()};
+  var dados={data:document.getElementById('edit-dt').value,horario:document.getElementById('edit-hr').value,caminhao:document.getElementById('edit-ca').value.trim(),reboque:document.getElementById('edit-re').value.trim(),destino:document.getElementById('edit-de').value.trim(),motivo:document.getElementById('edit-mo').value.trim()};
   api('PATCH','agendamentos',dados,'id=eq.'+id).then(function(r){
     if(!r.ok){tst('Erro ao salvar.','#fff','#dc2626');return;}
     document.getElementById('medit').classList.remove('on');
@@ -530,7 +455,7 @@ document.getElementById('btnSalvarEdit').addEventListener('click',function(){
   });
 });
 
-// NC
+// NC SALVAR
 document.getElementById('sNC').addEventListener('click',function(){
   var dt=document.getElementById('nc-dt').value;
   var hr=document.getElementById('nc-hr').value;
@@ -553,7 +478,6 @@ document.getElementById('lNC').addEventListener('click',function(){['nc-dt','nc-
 document.getElementById('btnVer').addEventListener('click',function(){rAg();document.getElementById('mov').classList.add('on');});
 document.getElementById('btnNC').addEventListener('click',function(){document.getElementById('mnc').classList.add('on');});
 document.getElementById('btnVerNC').addEventListener('click',function(){document.getElementById('mnc').classList.remove('on');rNC();document.getElementById('mlnc').classList.add('on');});
-
 ['fMov','fMnc','fMlnc','fMadmLogin','fMadm','fMedit','fMedit2'].forEach(function(id){
   var el=document.getElementById(id);
   if(el) el.addEventListener('click',function(){
@@ -564,9 +488,19 @@ document.getElementById('btnVerNC').addEventListener('click',function(){document
   document.getElementById(id).addEventListener('click',function(e){if(e.target===this)this.classList.remove('on');});
 });
 
-function zapLink(tel,msg){var n=tel.replace(/\D/g,'');if(n.length<=11)n='55'+n;return'https://wa.me/'+n+'?text='+encodeURIComponent(msg);}
-
 function tst(msg,cor,bg){var t=document.getElementById('tst');t.textContent=msg;t.style.color=cor;t.style.background=bg;t.classList.add('on');setTimeout(function(){t.classList.remove('on');},3000);}
+
+// PATCH support
+function api(method, table, body, filter) {
+  var url = SURL + '/rest/v1/' + table;
+  if (filter) url += '?' + filter;
+  var h = {'apikey':SKEY,'Authorization':'Bearer '+SKEY,'Content-Type':'application/json'};
+  if (method==='POST') h['Prefer']='return=minimal';
+  if (method==='GET') h['Prefer']='count=exact';
+  var opts = {method:method, headers:h};
+  if (body) opts.body = JSON.stringify(body);
+  return fetch(url, opts);
+}
 
 cntUp();
 </script>
