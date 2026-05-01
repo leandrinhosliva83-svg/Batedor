@@ -345,15 +345,6 @@ function rAg(){
     el.innerHTML=f.map(function(x,i){
       return '<div class="it"><div class="it0"><div class="it0l"><span style="'+cs[x.unidade]+';padding:2px 9px;border-radius:12px;font-size:11px;font-weight:800;letter-spacing:1px;">'+x.unidade+'</span><span style="font-size:10px;color:#94a3b8;">#'+String(i+1).padStart(4,'0')+'</span></div><span style="font-size:10px;color:#94a3b8;">'+(x.registro||'')+'</span></div><div class="ib"><div class="if">Data<strong>'+fmt(x.data)+'</strong></div><div class="if">Horario<strong>'+(x.horario||'-')+'</strong></div><div class="if">Caminhao<strong>'+x.caminhao+'</strong></div><div class="if">Reboque<strong>'+(x.reboque||'-')+'</strong></div><div class="if" style="grid-column:1/-1">Destino<strong>'+x.destino+'</strong></div></div><div class="if0"><div class="im">Motivo: <strong>'+(x.motivo||'Nao informado')+'</strong></div><button class="bfin" data-id="'+x.id+'" data-row="'+encodeURIComponent(JSON.stringify(x))+'">Finalizar</button></div></div>';
     }).join('');
-    el.querySelectorAll('.bfin').forEach(function(b){
-      b.addEventListener('click',function(){
-        if(!confirm('Marcar como finalizado?'))return;
-        var row=JSON.parse(decodeURIComponent(b.dataset.row));
-        var agora=new Date().toLocaleString('pt-BR');
-        api('POST','finalizados',{unidade:row.unidade,data:row.data,horario:row.horario,caminhao:row.caminhao,reboque:row.reboque,destino:row.destino,motivo:row.motivo,registro:row.registro,finalizado_em:agora}).then(function(r1){
-          if(!r1.ok){tst('Erro ao finalizar.','#fff','#dc2626');return;}
-          api('DELETE','agendamentos',null,'id=eq.'+b.dataset.id).then(function(){rAg();cntUp();tst('Agendamento finalizado!','#065f46','#d1fae5');});
-        });
       });
     });
   }).catch(function(){el.innerHTML='<div class="emp">Erro ao carregar.</div>';});
