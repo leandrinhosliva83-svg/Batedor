@@ -352,12 +352,12 @@ function cntUp() {
 // RENDER AGENDAMENTOS (cliente - so visualiza, sem finalizar)
 function rAg() {
   var el = document.getElementById("ls");
-  el.innerHTML = "<div class="ld"><div class="sp"></div><br>Carregando...</div>";
+  el.innerHTML = '<div class="ld"><div class="sp"></div><br>Carregando...</div>';
   api("GET", "agendamentos", null, "status=eq.pendente&order=created_at.desc").then(function(r) {
     return r.json();
   }).then(function(d) {
     var f = fAg === "Todos" ? d : d.filter(function(x) { return x.unidade === fAg; });
-    if (!f.length) { el.innerHTML = "<div class="emp">Nenhum agendamento pendente.</div>"; return; }
+    if (!f.length) { el.innerHTML = '<div class="emp">Nenhum agendamento pendente.</div>'; return; }
     var cs = {
       CEM: "background:#e0f2fe;color:#0369a1;border:1px solid #7dd3fc",
       CEMMA: "background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd",
@@ -379,7 +379,7 @@ function rAg() {
         "</div>" +
         "<div class="if0"><div class="im">Motivo: <strong>" + (x.motivo||"Nao informado") + "</strong></div></div></div>";
     }).join("");
-  }).catch(function() { el.innerHTML = "<div class="emp">Erro ao carregar.</div>"; });
+  }).catch(function() { el.innerHTML = '<div class="emp">Erro ao carregar.</div>'; });
 }
 
 // FILTROS AGENDAMENTOS
@@ -393,12 +393,12 @@ function rAg() {
 // RENDER NC
 function rNC() {
   var el = document.getElementById("lnc");
-  el.innerHTML = "<div class="ld"><div class="sp"></div><br>Carregando...</div>";
+  el.innerHTML = '<div class="ld"><div class="sp"></div><br>Carregando...</div>';
   api("GET", "nao_conformidades", null, "order=created_at.desc").then(function(r) {
     return r.json();
   }).then(function(d) {
     var f = fNC === "Todos" ? d : d.filter(function(x) { return x.unidade === fNC; });
-    if (!f.length) { el.innerHTML = "<div class="emp">Nenhuma nao conformidade.</div>"; return; }
+    if (!f.length) { el.innerHTML = '<div class="emp">Nenhuma nao conformidade.</div>'; return; }
     el.innerHTML = f.map(function(x) {
       return "<div class="ni"><div class="ni0"><div class="it0l">" +
         "<span style="background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;padding:2px 9px;border-radius:12px;font-size:11px;font-weight:800;letter-spacing:1px;">" + x.unidade + "</span>" +
@@ -411,7 +411,7 @@ function rNC() {
         (x.acao ? "<div class="if" style="grid-column:1/-1">Acao<strong>" + x.acao + "</strong></div>" : "") +
         "</div></div>";
     }).join("");
-  }).catch(function() { el.innerHTML = "<div class="emp">Erro ao carregar.</div>"; });
+  }).catch(function() { el.innerHTML = '<div class="emp">Erro ao carregar.</div>'; });
 }
 
 ["Todos","CEM","CEMMA","COPLASA"].forEach(function(v) {
@@ -488,7 +488,7 @@ document.getElementById("adm-nc").addEventListener("click", function() {
 
 function rAdm() {
   var el = document.getElementById("adm-ls");
-  el.innerHTML = "<div class="ld"><div class="sp"></div><br>Carregando...</div>";
+  el.innerHTML = '<div class="ld"><div class="sp"></div><br>Carregando...</div>';
   var cs = {
     CEM: "background:#e0f2fe;color:#0369a1;border:1px solid #7dd3fc",
     CEMMA: "background:#ede9fe;color:#6d28d9;border:1px solid #c4b5fd",
@@ -497,7 +497,7 @@ function rAdm() {
 
   if (admTab === "ag") {
     api("GET", "agendamentos", null, "status=eq.pendente&order=created_at.desc").then(function(r) { return r.json(); }).then(function(d) {
-      if (!d.length) { el.innerHTML = "<div class="emp">Nenhum agendamento pendente.</div>"; return; }
+      if (!d.length) { el.innerHTML = '<div class="emp">Nenhum agendamento pendente.</div>'; return; }
       el.innerHTML = d.map(function(x, i) {
         var encoded = encodeURIComponent(JSON.stringify(x));
         return "<div class="it"><div class="it0"><div class="it0l">" +
@@ -564,7 +564,7 @@ function rAdm() {
 
   } else if (admTab === "fin") {
     api("GET", "finalizados", null, "order=created_at.desc").then(function(r) { return r.json(); }).then(function(d) {
-      if (!d.length) { el.innerHTML = "<div class="emp">Nenhum agendamento finalizado.</div>"; return; }
+      if (!d.length) { el.innerHTML = '<div class="emp">Nenhum agendamento finalizado.</div>'; return; }
       el.innerHTML = d.map(function(x) {
         return "<div class="fn"><div class="fn0"><div class="it0l">" +
           "<span style="" + cs[x.unidade] + ";padding:2px 9px;border-radius:12px;font-size:11px;font-weight:800;letter-spacing:1px;">" + x.unidade + "</span>" +
@@ -592,7 +592,7 @@ function rAdm() {
 
   } else {
     api("GET", "nao_conformidades", null, "order=created_at.desc").then(function(r) { return r.json(); }).then(function(d) {
-      if (!d.length) { el.innerHTML = "<div class="emp">Nenhuma nao conformidade.</div>"; return; }
+      if (!d.length) { el.innerHTML = '<div class="emp">Nenhuma nao conformidade.</div>'; return; }
       el.innerHTML = d.map(function(x) {
         return "<div class="ni"><div class="ni0"><div class="it0l">" +
           "<span style="background:#fee2e2;color:#dc2626;border:1px solid #fca5a5;padding:2px 9px;border-radius:12px;font-size:11px;font-weight:800;letter-spacing:1px;">" + x.unidade + "</span>" +
