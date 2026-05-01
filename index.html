@@ -135,6 +135,8 @@ main{max-width:1100px;margin:0 auto;padding:0 20px 48px;}
 <div class="fi"><label>Frota Reboque Prancha</label><input type="text" id="cem-re" placeholder="Ex: 5678"></div>
 <div class="fi ff"><label>Local de Destino</label><input type="text" id="cem-de" placeholder="Ex: Rodovia BR-101, km 45"></div>
 <div class="fi ff"><label>Motivo do Transporte</label><textarea id="cem-mo" placeholder="Descreva o motivo..."></textarea></div>
+<div class="fi"><label>Nome de Quem Agendou</label><input type="text" id="cem-nm" placeholder="Ex: Joao Silva"></div>
+<div class="fi"><label>Contato WhatsApp</label><input type="tel" id="cem-ct" placeholder="Ex: 16 99999-9999"></div>
 </div></div>
 <div class="cf"><button class="bl" id="lp-cem">Limpar</button><button class="bag" id="ag-cem">+ Agendar</button></div>
 </div></div>
@@ -149,6 +151,8 @@ main{max-width:1100px;margin:0 auto;padding:0 20px 48px;}
 <div class="fi"><label>Frota Reboque Prancha</label><input type="text" id="cemma-re" placeholder="Ex: 5678"></div>
 <div class="fi ff"><label>Local de Destino</label><input type="text" id="cemma-de" placeholder="Ex: Rodovia BR-101, km 45"></div>
 <div class="fi ff"><label>Motivo do Transporte</label><textarea id="cemma-mo" placeholder="Descreva o motivo..."></textarea></div>
+<div class="fi"><label>Nome de Quem Agendou</label><input type="text" id="cem-nm" placeholder="Ex: Joao Silva"></div>
+<div class="fi"><label>Contato WhatsApp</label><input type="tel" id="cem-ct" placeholder="Ex: 16 99999-9999"></div>
 </div></div>
 <div class="cf"><button class="bl" id="lp-cemma">Limpar</button><button class="bag" id="ag-cemma">+ Agendar</button></div>
 </div></div>
@@ -163,6 +167,8 @@ main{max-width:1100px;margin:0 auto;padding:0 20px 48px;}
 <div class="fi"><label>Frota Reboque Prancha</label><input type="text" id="coplasa-re" placeholder="Ex: 5678"></div>
 <div class="fi ff"><label>Local de Destino</label><input type="text" id="coplasa-de" placeholder="Ex: Rodovia BR-101, km 45"></div>
 <div class="fi ff"><label>Motivo do Transporte</label><textarea id="coplasa-mo" placeholder="Descreva o motivo..."></textarea></div>
+<div class="fi"><label>Nome de Quem Agendou</label><input type="text" id="coplasa-nm" placeholder="Ex: Joao Silva"></div>
+<div class="fi"><label>Contato WhatsApp</label><input type="tel" id="coplasa-ct" placeholder="Ex: 16 99999-9999"></div>
 </div></div>
 <div class="cf"><button class="bl" id="lp-coplasa">Limpar</button><button class="bag" id="ag-coplasa">+ Agendar</button></div>
 </div></div>
@@ -305,13 +311,15 @@ tabs.forEach(function(u){
     var re=document.getElementById(u+'-re').value.trim();
     var de=document.getElementById(u+'-de').value.trim();
     var mo=document.getElementById(u+'-mo').value.trim();
+    var nmEl=document.getElementById(u+'-nm'); var nm=nmEl?nmEl.value.trim():'';
+    var ctEl=document.getElementById(u+'-ct'); var ct=ctEl?ctEl.value.trim():'';
     if(!dt||!hr||!ca||!de){tst('Preencha data, horario, frota e destino.','#92400e','#fef3c7');return;}
     var btn=document.getElementById('ag-'+u);
     btn.textContent='Salvando...';btn.disabled=true;
-    api('POST','agendamentos',{unidade:u.toUpperCase(),data:dt,horario:hr,caminhao:ca,reboque:re,destino:de,motivo:mo,registro:new Date().toLocaleString('pt-BR'),status:'pendente'}).then(function(r){
+    api('POST','agendamentos',{unidade:u.toUpperCase(),data:dt,horario:hr,caminhao:ca,reboque:re,destino:de,motivo:mo,nome_agendou:nm,contato:ct,registro:new Date().toLocaleString('pt-BR'),status:'pendente'}).then(function(r){
       btn.textContent='+ Agendar';btn.disabled=false;
       if(!r.ok){tst('Erro ao salvar.','#fff','#dc2626');return;}
-      ['dt','hr','ca','re','de','mo'].forEach(function(f){document.getElementById(u+'-'+f).value='';});
+      ['dt','hr','ca','re','de','mo'].forEach(function(f){document.getElementById(u+'-'+f).value='';}); var nEl=document.getElementById(u+'-nm'); if(nEl)nEl.value=''; var cEl=document.getElementById(u+'-ct'); if(cEl)cEl.value='';
       cntUp();tst('Agendamento salvo para todos!','#0a1f14','#6ee7b7');
     }).catch(function(){btn.textContent='+ Agendar';btn.disabled=false;tst('Erro de conexao.','#fff','#dc2626');});
   });
