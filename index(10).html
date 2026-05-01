@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teste</title>
+</head>
+<body style="background:#1a4a2e;color:#fff;font-family:sans-serif;padding:20px;">
+<h2>Teste de conexao</h2>
+<button id="btn" style="padding:12px 24px;background:#6ee7b7;color:#0f172a;border:none;border-radius:8px;font-size:16px;font-weight:700;cursor:pointer;">Testar</button>
+<p id="msg" style="margin-top:20px;font-size:14px;"></p>
+<script>
+document.getElementById('btn').addEventListener('click', function() {
+  document.getElementById('msg').textContent = 'JavaScript funcionando! Testando banco...';
+  fetch('https://loehgloomiimnwwtlrmk.supabase.co/rest/v1/agendamentos?select=id&limit=1', {
+    headers: {
+      'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxvZWhnbG9vbWlpbW53d3Rscm1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcyMTYxMjgsImV4cCI6MjA5Mjc5MjEyOH0.mQnRUJKTfWdU-R1y0hISGLljEW8O6wMrPe0ldXI6ct8',
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxvZWhnbG9vbWlpbW53d3Rscm1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcyMTYxMjgsImV4cCI6MjA5Mjc5MjEyOH0.mQnRUJKTfWdU-R1y0hISGLljEW8O6wMrPe0ldXI6ct8'
+    }
+  }).then(function(r) {
+    if (r.ok) {
+      document.getElementById('msg').textContent = 'TUDO OK! Banco conectado. Status: ' + r.status;
+      document.getElementById('msg').style.color = '#6ee7b7';
+    } else {
+      document.getElementById('msg').textContent = 'Erro no banco. Status: ' + r.status;
+      document.getElementById('msg').style.color = '#f87171';
+    }
+  }).catch(function(e) {
+    document.getElementById('msg').textContent = 'Erro de conexao: ' + e.message;
+    document.getElementById('msg').style.color = '#f87171';
+  });
+});
+</script>
+</body>
+</html>
